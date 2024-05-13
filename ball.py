@@ -1,4 +1,7 @@
-from speed_moving_change.speed_strategy import NormalSpeedStrategy
+from speed_moving_change.extreme_speed_strategy import ExtremeSpeedStrategy
+from speed_moving_change.high_speed_strategy import HighSpeedStrategy
+from speed_moving_change.normal_speed_strategy import NormalSpeedStrategy
+
 
 class Ball:
     def __init__(self, canvas, platform, scoreboard, color):
@@ -8,7 +11,7 @@ class Ball:
         self.oval = None
         self.speed_x = 2  
         self.speed_y = -2  
-        self.touch_bottom = False 
+        self.touch_bottom = False  
         self.speed_strategy = NormalSpeedStrategy()
 
     def create(self):
@@ -36,5 +39,11 @@ class Ball:
         return False
 
     def check_speed_increase(self):
-        if self.scoreboard.score >= 10:  
+        if self.scoreboard.score % 40 == 0:
+            self.speed_strategy = ExtremeSpeedStrategy()  
+            self.speed_strategy.increase_speed(self) 
+        elif (self.scoreboard.score % 20 == 0 and self.scoreboard.score < 40):
+            self.speed_strategy = HighSpeedStrategy()  
+            self.speed_strategy.increase_speed(self)
+        elif self.scoreboard.score % 5 == 0:
             self.speed_strategy.increase_speed(self)
