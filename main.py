@@ -2,8 +2,6 @@ from tkinter import *
 import time
 from ball import Ball
 from platform import Platform # type: ignore
-from moving.move_left_command import MoveLeftCommand
-from moving.move_right_command import MoveRightCommand
 from scoreboard.scoreboard import Scoreboard
 from scoreboard.scoreboard_observer import WindowScoreboardObserver
 
