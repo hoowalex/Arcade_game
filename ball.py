@@ -1,11 +1,10 @@
 import random
 
-
 class Ball():
-
-    def __init__(self, canvas, platform, color):
+    def __init__(self, canvas, platform, scoreboard, color):
         self.canvas = canvas
         self.platform = platform
+        self.scoreboard = scoreboard
         self.oval = canvas.create_oval(200, 200, 215, 215, fill=color)
         self.dir = [-3, -2, -1, 1, 2, 3]
         self.x = random.choice(self.dir)
@@ -28,6 +27,7 @@ class Ball():
             self.touch_bottom = True
         if self.touch_platform(pos) == True:
             self.y = -3
+            self.scoreboard.increase_score(1)  
         if pos[0] <= 0:
             self.x = 3
         if pos[2] >= 500:
