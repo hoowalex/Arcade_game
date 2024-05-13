@@ -19,28 +19,25 @@ scoreboard = Scoreboard()
 window_observer = WindowScoreboardObserver(window, scoreboard)
 scoreboard.add_observer(window_observer)
 
-record_label = Label(window, text="Рекорд: " + str(record_manager.record))
-record_label.pack()
-
-ball = Ball(canvas, platform, scoreboard, 'red')
-
 window.bind('<KeyPress-Left>', platform.start_left)
 window.bind('<KeyRelease-Left>', platform.stop_left)
 window.bind('<KeyPress-Right>', platform.start_right)
 window.bind('<KeyRelease-Right>', platform.stop_right)
 
+
+record_label = Label(window, text="Рекорд: " + str(record_manager.record))
+record_label.pack(side=LEFT) 
+
 while True:
-    if not ball.touch_bottom:
+    ball = Ball(canvas, platform, scoreboard, 'red')  
+    ball.create()
+    while not ball.touch_bottom:
         ball.draw()
         platform.move()
-    else:
-        ball = Ball(canvas, platform, scoreboard, 'red')
-        if scoreboard.score > record_manager.record:
-            record_manager.update_record(scoreboard.score)  
-            record_label.config(text="Рекорд: " + str(record_manager.record))  
-        scoreboard.reset_score()  
-        
-    window.update()
-    time.sleep(0.01)
-
-window.mainloop()
+        window.update()
+        time.sleep(0.01)
+    canvas.delete(ball.oval)  
+    if scoreboard.score > record_manager.record:
+        record_manager.update_record(scoreboard.score)
+        record_label.config(text="Рекорд: " + str(record_manager.record))
+    scoreboard.reset_score()
