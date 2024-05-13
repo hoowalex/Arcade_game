@@ -22,22 +22,15 @@ scoreboard.add_observer(window_observer)
 
 ball = Ball(canvas, platform, scoreboard, 'red')
 
-def on_left(event):
-    move_left_command.execute()
-
-def on_right(event):
-    move_right_command.execute()
-
-window.bind('<KeyPress-Left>', on_left)
-window.bind('<KeyPress-Right>', on_right)
-
-move_left_command = MoveLeftCommand(platform)
-move_right_command = MoveRightCommand(platform)
+window.bind('<KeyPress-Left>', platform.start_left)
+window.bind('<KeyRelease-Left>', platform.stop_left)
+window.bind('<KeyPress-Right>', platform.start_right)
+window.bind('<KeyRelease-Right>', platform.stop_right)
 
 while True:
     if not ball.touch_bottom:
         ball.draw()
-        platform.draw()
+        platform.move()
     else:
         ball = Ball(canvas, platform, scoreboard, 'red')
     window.update()
