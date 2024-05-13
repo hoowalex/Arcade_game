@@ -41,3 +41,5 @@ while True:
         record_manager.update_record(scoreboard.score)
         record_label.config(text="Рекорд: " + str(record_manager.record))
     scoreboard.reset_score()
+
+window.mainloop()
