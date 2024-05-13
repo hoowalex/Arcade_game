@@ -13,3 +13,7 @@ class Scoreboard():
     def increase_score(self, points):
         self.score += points
         self.notify_observers()
+
+    def reset_score(self):
+        self.score = 0
+        self.notify_observers()

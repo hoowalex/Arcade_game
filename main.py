@@ -14,7 +14,7 @@ canvas = Canvas(window, width=500, height=400)
 canvas.pack()
 
 platform = Platform(canvas, 'blue')
-scoreboard = Scoreboard()  # Ініціалізуємо об'єкт рахунку
+scoreboard = Scoreboard()
 window_observer = WindowScoreboardObserver(window, scoreboard)
 scoreboard.add_observer(window_observer)
 
@@ -31,6 +31,7 @@ while True:
         platform.move()
     else:
         ball = Ball(canvas, platform, scoreboard, 'red')
+        scoreboard.reset_score()  # Скидання рахунку до нуля
     window.update()
     time.sleep(0.01)
 
