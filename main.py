@@ -1,9 +1,10 @@
 from tkinter import *
 import time
-from ball import Ball
 from platform import Platform # type: ignore
+from ball import Ball
+from record_manager import record_manager
 from scoreboard.scoreboard import Scoreboard
-from scoreboard.scoreboard_observer import WindowScoreboardObserver
+from scoreboard.scoreboard_observer import WindowScoreboardObserver  
 
 window = Tk()
 window.title("Аркада")
@@ -18,6 +19,9 @@ scoreboard = Scoreboard()
 window_observer = WindowScoreboardObserver(window, scoreboard)
 scoreboard.add_observer(window_observer)
 
+record_label = Label(window, text="Рекорд: " + str(record_manager.record))
+record_label.pack()
+
 ball = Ball(canvas, platform, scoreboard, 'red')
 
 window.bind('<KeyPress-Left>', platform.start_left)
@@ -31,7 +35,11 @@ while True:
         platform.move()
     else:
         ball = Ball(canvas, platform, scoreboard, 'red')
-        scoreboard.reset_score()  # Скидання рахунку до нуля
+        if scoreboard.score > record_manager.record:
+            record_manager.update_record(scoreboard.score)  
+            record_label.config(text="Рекорд: " + str(record_manager.record))  
+        scoreboard.reset_score()  
+        
     window.update()
     time.sleep(0.01)
 
